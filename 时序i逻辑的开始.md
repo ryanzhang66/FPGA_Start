@@ -18,8 +18,25 @@
 所以我们需要同步释放复位信号，让**复位的信号与时钟上升沿对齐**。  
 
 ## D触发器的FPGA实现
-```v
-moudle d_trigger(
-    
-);
-```
+- 源代码
+  ```v
+  module d_trigger(
+      input wire sys_clk,
+      input wire D,
+      input wire sys_rst_n,
+
+      output reg Q
+  );
+
+  always@(posedge sys_clk) begin
+      if (sys_rst_n == 1'b0) begin 
+          Q <= 1'b0;
+      end 
+      else begin
+          Q <= D;
+      end
+  end
+  endmodule
+  ```
+  - 进行编译后，生成的电路图是这样的：
+      ![alt text](image.png)
